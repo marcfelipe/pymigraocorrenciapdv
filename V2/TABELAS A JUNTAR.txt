@@ -1,0 +1,36 @@
+#TABELAS A MIGRAR:
+'''
+contareceber,
+finalizacao,
+itevda,
+ocorrencia_pdv,
+sangria,
+transacao,
+transacao_xmllog
+transacao_xmlnota,
+'''
+
+#SQL LISTAR OS CAMPOS E AS TABELAS DE TRABALHO.
+select * from rdb$relation_fields
+where rdb$relation_name in (
+'FINALIZACAO',
+'ITEVDA',
+'OCORRENCIA_PDV',
+'SANGRIA',
+'TRANSACAO',
+'TRANSACAO_XMLLOG',
+'TRANSACAO_XMLNOTA'
+)
+
+#LISTAR QUANTIDADE DE CAMPOS POR NOTA.
+select RDB$RELATION_NAME, COUNT(RDB$RELATION_NAME) from rdb$relation_fields
+where rdb$relation_name in (
+'FINALIZACAO',
+'ITEVDA',
+'OCORRENCIA_PDV',
+'SANGRIA',
+'TRANSACAO',
+'TRANSACAO_XMLLOG',
+'TRANSACAO_XMLNOTA'
+)
+group by RDB$RELATION_NAME

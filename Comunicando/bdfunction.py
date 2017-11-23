@@ -1,4 +1,5 @@
 import fdb
+from listaSQLITEVDA import sqlInsertItevda,sqlSelectAllItevda
 
 def pumpOcorrencia_pdv(bdSource,bdTarget):
     conTarget = fdb.connect(dsn=bdTarget,user='SYSDBA',
@@ -21,3 +22,38 @@ def pumpOcorrencia_pdv(bdSource,bdTarget):
         cursorIns.execute(sqlInsercao,linhaBD)
         conTarget.commit()
         cursorIns.close()
+        
+def pumpItevdaAllRegisters(bdSource,bdTarget):
+    conTarget = fdb.connect(dsn=bdTarget,user='SYSDBA',
+                          password='masterkey')
+    conSource = fdb.connect(dsn=bdSource,user='SYSDBA',
+                          password='masterkey')
+
+    cursorSel = conSource.cursor()
+    cursorSel.execute(sqlSelectAllItevda)
+    rsSel = cursorSel.fetchall()
+
+    for linhaBD in rsSel:
+        cursorIns = conTarget.cursor()
+        cursorIns.execute(sqlInsercao,linhaBD)
+        conTarget.commit()
+        cursorIns.close()        
+
+#The function is not ready yet...Has to implement filter conditions for the cursorSel and further..
+def pumpItevdaMissingRegisters(bdSource,bdTarget):
+    conTarget = fdb.connect(dsn=bdTarget,user='SYSDBA',
+                          password='masterkey')
+    conSource = fdb.connect(dsn=bdSource,user='SYSDBA',
+                          password='masterkey')
+
+    cursorSel = conSource.cursor()
+    cursorSel.execute(sqlSelectAllItevda)
+    rsSel = cursorSel.fetchall()
+
+    for linhaBD in rsSel:
+        cursorIns = conTarget.cursor()
+        cursorIns.execute(sqlInsercao,linhaBD)
+        conTarget.commit()
+        cursorIns.close()   
+print(sqlInsertItevda)
+    
